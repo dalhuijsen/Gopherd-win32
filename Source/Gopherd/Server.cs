@@ -47,7 +47,7 @@ namespace Gopherd
             ServerPort = Properties.Settings.Default.Port;
             FancyIndexes = Properties.Settings.Default.FancyIndexes;
             DirectoryIndex = Properties.Settings.Default.DirectoryIndex;
-
+            Logging = Properties.Settings.Default.Logging;
             if (SanityTest())
             {
                 StartServer();
@@ -85,7 +85,7 @@ namespace Gopherd
         private bool SanityTest()
         {
             /* Check if all settings are valid for this computer or vomit errors when something is amis */
-            return true;
+            return Directory.Exists(ServerRoot);
         }
         private void ListenForClients()
         {
@@ -93,9 +93,9 @@ namespace Gopherd
             tcpListener.Start();
             while (Listen)
             {
-                //blocks until client is connected
                 try
                 {
+                    //blocks until client is connected (throws when shutting down and connected?)
                     client = this.tcpListener.AcceptTcpClient();
                     clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
                     clientThread.IsBackground = true;
@@ -269,7 +269,8 @@ namespace Gopherd
             {
                 using (StreamReader RequestFile = new StreamReader(filepath))
                 {
-                    byte[] largemem = encoder.GetBytes(RequestFile.ReadToEnd()); //FIXME: dont readtoend you git ;-)
+                    //FIXME: make this binary safe, remove the encoder, don't read to end, etc..)
+                    byte[] largemem = encoder.GetBytes(RequestFile.ReadToEnd()); 
 
                     clientStream.Write(largemem, 0, largemem.Length);
                     clientStream.Flush();
