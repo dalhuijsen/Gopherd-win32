@@ -9,7 +9,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Net;
 using System.Configuration;
-using Microsoft.Win32; //needed for mimeinfo, maybe im better off using /etc/mime.types?
+using Microsoft.Win32;
+using System.Diagnostics; //needed for mimeinfo, maybe im better off using /etc/mime.types?
 
 namespace Gopherd
 {
@@ -26,16 +27,21 @@ namespace Gopherd
         public bool Indexes { get; set; }
         public bool FancyIndexes { get; set; }
         public bool Logging { get; set; }
-        private bool Listen { get; set; }
+        public string LogFile { get; set; }
+
+
         /* Globals */
         private TcpListener tcpListener;
         private Thread listenThread;
         private string ClientRequest { get; set; }
+        private bool Listen { get; set; }
         //private NotifyIcon SysTrayIcon { get; set; }
         private NetworkStream clientStream { get; set; }
         private ASCIIEncoding encoder { get; set; }
         private TcpClient client {get; set; }
         private Thread clientThread {get; set;}
+
+        private static readonly object sync = new Object();
 
         public Server()
         {
@@ -48,6 +54,7 @@ namespace Gopherd
             FancyIndexes = Properties.Settings.Default.FancyIndexes;
             DirectoryIndex = Properties.Settings.Default.DirectoryIndex;
             Logging = Properties.Settings.Default.Logging;
+            LogFile = Properties.Settings.Default.LogFile;
             if (SanityTest())
             {
                 StartServer();
@@ -97,7 +104,7 @@ namespace Gopherd
                 {
                     //blocks until client is connected (throws when shutting down and connected?)
                     client = this.tcpListener.AcceptTcpClient();
-                    clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
+                    clientThread = new Thread(new ParameterizedThreadStart(HandleClient));
                     clientThread.IsBackground = true;
                     clientThread.Start(client);
                 }
@@ -108,7 +115,7 @@ namespace Gopherd
 
             }
         }
-        private void HandleClientComm(object client)
+        private void HandleClient(object client)
         {
             dbg("HandleClientComm");
             TcpClient tcpClient = (TcpClient)client;
@@ -160,7 +167,7 @@ namespace Gopherd
             }
             else
             {
-                ShowErrorMessage("Bad Programmer, No cookie");
+                ShowErrorMessage("503 Bad Programmer, No cookie");
 
             }
 
@@ -327,15 +334,20 @@ namespace Gopherd
         {
             if (this.Debugging)
             {
+                log(line);
                 Console.WriteLine(line);
             }
         }
         private void log(string line)
         {
-            if (this.Logging)
+//            if (this.Logging)
+            using (EventLog eventLog = new EventLog("Application"))
             {
-                MessageBox.Show(line);
+                eventLog.Source = "Gopherd";
+                eventLog.WriteEntry("Gopherd: " + line, EventLogEntryType.Information);
+                eventLog.Close();
             }
+                //          {
         }
     }
 }

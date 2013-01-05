@@ -187,7 +187,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Gopherd"
         "ProductCode" = "8:{CB78A438-1C77-45CF-9CC4-6C9006E3ED83}"
-        "PackageCode" = "8:{225F11BA-9961-487F-B302-B75C874711BC}"
+        "PackageCode" = "8:{5EEF1CAC-4A90-4AF7-89BE-FB1AA8F5E6F1}"
         "UpgradeCode" = "8:{D3A574FB-74B3-43CB-9DCC-B7DA7959C2D2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
