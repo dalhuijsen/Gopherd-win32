@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gopherd", "Gopherd\Gopherd.csproj", "{36D47238-708B-4B79-B271-4967CF312698}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Gopherd Installer", "Gopherd Installer\Gopherd Installer.vdproj", "{9A5C767E-2609-4A81-A0C1-E7D16EFD2086}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Gopherd", "Gopherd Installer\Gopherd Installer.vdproj", "{9A5C767E-2609-4A81-A0C1-E7D16EFD2086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gopherc", "Gopherc\Gopherc\Gopherc.csproj", "{68E68BD5-659D-4945-B512-3DC15D10247C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{36D47238-708B-4B79-B271-4967CF312698}.Release|x86.Build.0 = Release|x86
 		{9A5C767E-2609-4A81-A0C1-E7D16EFD2086}.Debug|x86.ActiveCfg = Debug
 		{9A5C767E-2609-4A81-A0C1-E7D16EFD2086}.Release|x86.ActiveCfg = Release
+		{68E68BD5-659D-4945-B512-3DC15D10247C}.Debug|x86.ActiveCfg = Debug|x86
+		{68E68BD5-659D-4945-B512-3DC15D10247C}.Debug|x86.Build.0 = Debug|x86
+		{68E68BD5-659D-4945-B512-3DC15D10247C}.Release|x86.ActiveCfg = Release|x86
+		{68E68BD5-659D-4945-B512-3DC15D10247C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
